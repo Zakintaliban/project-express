@@ -24,7 +24,9 @@ let games = [
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => res.send("ya apa"));
+// app.get("/", (req, res) => res.send("ya apa"));
+
+app.get("/games", (req, res) => res.send(games));
 
 app.post("/games", (req, res) => {
   const lastIndex = games.length - 1;
