@@ -49,4 +49,39 @@ app.post("/games", (req, res) => {
   });
 });
 
+app.delete("/games/:id", (req, res) => {
+  try {
+    const idToDelete = req.params.id;
+    let newGame = games.filter(item => item.id !== parseInt(idToDelete));
+
+    games = newGame;
+
+    res.status(200).send(games);
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+app.put("/games/:id", (req, res) => {
+  try {
+    let getGameToUpdate = games.findIndex(data => data.id == req.params.id);
+    console.log(getGameToUpdate);
+    games.map(data => {
+      if (data.id == req.params.id) {
+        games[getGameToUpdate].judul = req.body.judul;
+        games[getGameToUpdate].tahun = req.body.tahun;
+        games[getGameToUpdate].genre = req.body.genre;
+        games[getGameToUpdate].rating = req.body.rating;
+      }
+    });
+    res.send({
+      message: "data successfully updated",
+      games
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
